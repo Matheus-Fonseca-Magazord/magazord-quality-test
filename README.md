@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="logo-magazord.png" width="220" />
+  <img src="logo-magazord.png" width="240" />
 </p>
 
 ---
@@ -19,12 +19,6 @@ O teste é focado em **testes automatizados**, **arquitetura de testes**, **estr
 - Não é obrigatório criar um projeto executável  
 - As respostas podem ser adicionadas neste próprio repositório  
 - Não serão aceitas alterações após o envio
-
----
-
-# Questionário Técnico
-
-## Especialização em Testes Automatizados
 
 ---
 
