@@ -2,236 +2,330 @@
   <img src="logo-magazord.png" width="220" />
 </p>
 
+---
+
 # Teste para vaga de Analista de Qualidade Sênior – Magazord
 
 Este repositório tem como objetivo avaliar candidatos à vaga de **Analista de Qualidade Sênior** na **Magazord**.
 
-O teste é focado em **qualidade de software**, **testes automatizados**, **arquitetura de testes**, **raciocínio técnico** e **boas práticas** aplicadas a cenários reais.
+O teste é focado em **testes automatizados**, **arquitetura de testes**, **estratégia de qualidade**, **integrações** e **boas práticas aplicadas a cenários reais**.
 
 ---
 
 ## Instruções Gerais
 
-- Responda às questões de forma **clara, objetiva e bem estruturada**
-- Sempre que possível, utilize **exemplos práticos**, **pseudocódigo** ou **código real**
-- Não é necessário criar um projeto executável
-- Você pode responder diretamente neste repositório (README ou arquivos separados, se desejar)
-- Sinta-se à vontade para sugerir melhorias, abordagens alternativas ou boas práticas
+- Responda às questões de forma clara e objetiva  
+- Utilize exemplos práticos, pseudocódigo ou código real sempre que julgar necessário  
+- Não é obrigatório criar um projeto executável  
+- As respostas podem ser adicionadas neste próprio repositório  
+- Não serão aceitas alterações após o envio
 
 ---
 
-## Questionário Técnico
+# Questionário Técnico
 
-### Especialização em Testes Automatizados
+## Especialização em Testes Automatizados
 
 ---
 
-## PARTE 1: Testes de API
+## PARTE 1: Testes API
 
-### Questão 1.1 – Rate Limiting
+---
+
+### Questão 1.1
 
 **Cenário:**  
-Você precisa testar uma API REST que possui rate limiting de **100 requisições por minuto**.
+Você precisa testar uma API REST que possui rate limiting de 100 requisições por minuto.
 
-**Perguntas:**
-- Como você validaria que o rate limiting está funcionando corretamente?
-- Como garantir que seus testes não sejam bloqueados durante a execução normal?
-- Como testar o comportamento da API quando o limite é excedido?
+**Pergunta:**  
+Como você estruturaria seus testes automatizados para:
+
+- Validar que o rate limiting está funcionando corretamente?
+- Garantir que seus testes não sejam bloqueados pelo rate limiting durante a execução normal?
+- Testar o comportamento da API quando o limite é excedido?
 
 ---
 
-### Questão 1.2 – Autenticação com JWT
+### Questão 1.2
 
 **Cenário:**  
-Uma API retorna um token JWT que expira em **15 minutos**.  
-A suíte de testes demora **45 minutos** e realiza múltiplas chamadas autenticadas.
+Uma API retorna um token JWT que expira em 15 minutos. Seus testes demoram 45 minutos para executar e fazem múltiplas chamadas autenticadas.
 
-**Perguntas:**
-- Descreva sua estratégia para gerenciar autenticação durante toda a execução
+**Pergunta:**
+
+- Descreva sua estratégia para gerenciar a autenticação durante toda a suite de testes
 - Implemente (em pseudocódigo ou código real) um mecanismo de refresh token automático
-- Como garantir que testes em paralelo não conflitem no uso de tokens?
+- Como você garantiria que testes executados em paralelo não conflitem no gerenciamento de tokens?
 
 ---
 
-### Questão 1.3 – Webhooks Assíncronos
+### Questão 1.3
 
 **Cenário:**  
-Um endpoint de webhook:
-- Recebe dados via `POST`
-- Processa de forma assíncrona (5 a 300 segundos)
-- Envia callback para uma URL configurada
-- Callback contém um hash **HMAC SHA-256**
+Você está testando um endpoint de webhook que:
 
-**Perguntas:**
-- Desenhe a arquitetura da solução de testes
-- Implemente a validação do hash HMAC
-- Como lidar com timeouts variáveis?
-- Como isolar testes paralelos?
-- Como simular falhas (timeout, URL inválida, erro 500)?
+- Recebe dados via POST
+- Processa assincronamente (pode levar de 5 a 300 segundos)
+- Envia callback para uma URL configurada quando o processamento termina
+- O callback contém um hash HMAC SHA-256 para validação de integridade
+
+**Pergunta:**
+
+- Desenhe a arquitetura completa da solução de testes automatizados
+- Implemente o código para validar o hash HMAC recebido
+- Como você lidaria com timeouts variáveis?
+- Como você isolaria os testes para executá-los em paralelo sem colisões?
+- Como você simularia falhas no callback (timeout, URL inválida, resposta 500)?
 
 ---
 
-## PARTE 2: Testes E2E
+## PARTE 2: TESTES E2E
 
-### Questão 2.1 – Fluxo de Checkout
+---
+
+### Questão 2.1
 
 **Cenário:**  
-Fluxo de checkout com:
-- Carrinho
-- Cupom de uso único
-- Gateway externo (sandbox)
-- Confirmação por e-mail
-- Atualização de status no banco
+Você precisa testar um fluxo de checkout que envolve:
 
-**Perguntas:**
-- Como garantir cupons únicos por execução?
-- Como validar e-mails sem depender de serviços externos?
-- Estratégia de rollback/limpeza
-- Como lidar com falhas intermitentes do gateway?
+- Adicionar produtos ao carrinho
+- Aplicar cupom de desconto (que só pode ser usado uma vez)
+- Processar pagamento com gateway externo (sandbox)
+- Receber confirmação por email
+- Atualizar status no banco de dados
+
+**Pergunta:**
+
+- Como você garantiria que cada execução de teste use um cupom válido diferente?
+- Como você validaria o email de confirmação sem depender de serviços externos não confiáveis?
+- Descreva sua estratégia de rollback/limpeza após cada teste
+- Como você lidaria com falhas intermitentes do gateway de pagamento?
 
 ---
 
-### Questão 2.2 – Múltiplas Abas e Modais
+### Questão 2.2
 
 **Cenário:**  
-Sistema com múltiplas abas e modal para upload de documentos.
+Sistema com múltiplas abas onde:
 
-**Problema:**  
-Refresh em qualquer aba perde os dados.
+- Aba 1: Usuário preenche um formulário extenso (20+ campos)
+- Ao clicar em "Próximo", abre Aba 2 com dados calculados baseados na Aba 1
+- Na Aba 2, usuário pode abrir Aba 3 (modal) para upload de documentos
+- Após upload, retorna para Aba 2 e deve clicar em "Finalizar"
 
-**Perguntas:**
-- Estratégia para manter referência entre abas
-- Exemplo de navegação automatizada entre as abas
-- Como evitar perda de dados?
-- Como lidar com novas janelas/modais?
-- Abordagem de debug quando falha na Aba 3
+**PROBLEMA:**  
+Se houver refresh em qualquer aba, os dados da Aba 1 são perdidos e o teste falha
 
----
+**Pergunta:**
 
-## PARTE 3: Seletores e Frontend
-
-### Questão 3.1 – ExtJS com IDs Dinâmicos
-
-**Perguntas:**
-- Estratégias para localizar elementos de forma confiável
-- Implemente 3 seletores diferentes para um botão "Salvar"
-- Como lidar com renderização condicional?
-- Como diferenciar 5 botões "Salvar" idênticos?
+- Qual estratégia você usaria para manter referência entre as abas?
+- Implemente código demonstrando como você navegaria entre as 3 abas
+- Como você garantiria que os dados não se percam durante a execução?
+- Como você lidaria com popups/modais que abrem em novas janelas?
+- Qual seria seu approach para debug quando o teste falha na "Aba 3"?
 
 ---
 
-### Questão 3.2 – React Avançado
-
-**Cenário:**
-- Lazy loading
-- Redux
-- IDs dinâmicos
-- Grids virtualizados
-
-**Perguntas:**
-- Como testar uma linha específica em um grid virtualizado?
-- Código validando Redux → UI
-- Como esperar lazy loading?
-- Estratégia para permissões
-- Como evitar race conditions?
+## PARTE 3: TESTES FRONT-END
 
 ---
 
-## PARTE 4: Testes com Importação de Arquivos
-
-### Questão 4.1 – CSV com 1000+ linhas
-
-**Perguntas:**
-- Estruturação dos dados
-- Validação de processamento completo
-- Testes de erro (arquivo corrompido, dados inválidos)
-
----
-
-### Questão 4.2 – Processamento Assíncrono em Massa
+### Questão 3.1
 
 **Cenário:**  
-Arquivos CSV, XLSX, XML, JSON com até 100.000 registros.
+Sistema ExtJS onde todos os IDs são gerados dinamicamente no formato:
 
-**Perguntas:**
-- Arquitetura da suíte de testes
-- Geração dinâmica de arquivos
-- Validação de retry e processamento parcial
-- Testes de performance
-- Validação eficiente de relatórios de erro
+- textfield-1234-inputEl  
+- button-5678-btnEl  
+- grid-9012-body  
 
----
+Os números mudam a cada renderização.
 
-## PARTE 5: Testes Mobile
+**Pergunta:**
 
-### Questão 5.1 – Mobile Tradicional
-
-**Perguntas:**
-- Ferramenta escolhida e justificativa
-- Mock de geolocalização
-- Testes offline/online
-- Push notifications
-- Estratégia multi-plataforma (iOS/Android)
+- Quais estratégias você utilizaria para localizar elementos de forma confiável?
+- Implemente 3 diferentes seletores para um botão "Salvar" neste cenário
+- Como você lidaria com componentes que são renderizados condicionalmente?
+- Qual seria sua abordagem se o sistema tivesse 5 botões "Salvar" visualmente idênticos na mesma tela?
 
 ---
 
-### Questão 5.2 – Realidade Aumentada (AR)
+### Questão 3.2
 
-**Perguntas:**
-- É viável automatizar? Justifique
-- Estratégia de testes
-- Testes de gestos complexos
-- Variabilidade de hardware
-- O que automatizar vs. manter manual
+**Cenário:**  
+Aplicação React com:
+
+- Componentes carregados via lazy loading
+- State management com Redux
+- IDs gerados aleatoriamente
+- Elementos que aparecem/desaparecem baseado em permissões do usuário
+- Grids virtualizados (renderizam apenas linhas visíveis)
+
+**Pergunta:**
+
+- Como você testaria uma linha específica em um grid com 10.000 registros que usa virtualização?
+- Implemente código para validar que uma ação no Redux Store refletiu corretamente na UI
+- Como você esperaria elementos que são carregados via lazy loading?
+- Descreva uma estratégia para testar componentes que só aparecem para usuários com permissões específicas
+- Como você evitaria race conditions em componentes assíncronos?
 
 ---
 
-## PARTE 6: E2E vs Testes de Componentes
+## PARTE 4: TESTES COM ARQUIVOS DE IMPORTAÇÃO
+
+---
+
+### Questão 4.1
+
+**Cenário:**  
+Sistema que importa arquivos CSV com 1000+ linhas e valida:
+
+- Formato dos dados
+- Regras de negócio complexas
+- Duplicatas
+- Relacionamentos com dados existentes
+
+**Pergunta:**
+
+- Como você estruturaria os dados de teste (arquivos CSV)?
+- Como você validaria que todas as 1000 linhas foram processadas corretamente?
+- Como você testaria cenários de erro (arquivo corrompido, dados inválidos)?
+
+---
+
+### Questão 4.2
+
+**Cenário:**  
+Sistema que processa múltiplos tipos de arquivo (CSV, XLSX, XML, JSON) e:
+
+- Cada arquivo pode ter até 100.000 registros
+- Processamento é assíncrono com fila
+- Sistema gera relatório de erros
+- Alguns registros podem ser processados parcialmente
+- Sistema possui retry automático para falhas temporárias
+
+**Pergunta:**
+
+- Projete uma suite de testes automatizados completa para este cenário
+- Como você geraria arquivos de teste de diferentes tamanhos dinamicamente?
+- Implemente código para validar processamento parcial e retry
+- Como você testaria a performance da importação?
+- Como você validaria o relatório de erros sem processar 100.000 linhas em cada teste?
+
+---
+
+## PARTE 5: TESTES MOBILE
+
+---
+
+### Questão 5.1
+
+**Cenário:**  
+Aplicativo mobile (iOS e Android) que usa:
+
+- Geolocalização
+- Câmera
+- Notificações push
+- Armazenamento offline
+- Sincronização quando volta online
+
+**Pergunta:**
+
+- Qual ferramenta você escolheria e por quê? (Appium, Detox, Maestro, etc.)
+- Como você mockaria geolocalização em testes automatizados?
+- Como você testaria o comportamento offline/online?
+- Como você validaria notificações push?
+- Descreva sua estratégia para executar os mesmos testes em iOS e Android
+
+---
+
+### Questão 5.2
+
+**Cenário:**  
+App mobile com realidade aumentada (AR) que:
+
+- Usa a câmera para detectar objetos
+- Sobrepõe informações 3D
+- Requer calibração de sensores
+- Funciona offline com sync posterior
+- Tem gestos complexos (pinch, rotate, swipe multi-touch)
+
+**Pergunta:**
+
+- É viável automatizar testes para este cenário? Justifique.
+- Se sim, qual seria sua abordagem? Se não, quais alternativas você proporia?
+- Como você testaria gestos complexos?
+- Como você lidaria com a variabilidade de hardware (diferentes câmeras, sensores)?
+- Que tipo de testes você automatizaria vs. manteria manuais?
+
+---
+
+## PARTE 6: E2E vs TESTES DE COMPONENTES
+
+---
 
 ### Questão 6.1
 
-**Teórica:**
-- Diferença entre E2E e Componentes
-- Quando usar cada um
-- Vantagens e desvantagens
-- Pirâmide de testes
+**Pergunta Teórica:**  
+Explique detalhadamente:
 
-**Prática:**
-- Teste de componente para validação de CPF
-- Teste E2E para fluxo completo de cadastro
-- Justificativa das escolhas
+- A diferença entre testes E2E e testes de componentes
+- Quando usar cada tipo
+- Vantagens e desvantagens de cada abordagem
+- Como você equilibraria a pirâmide de testes em um projeto real
 
----
+**Pergunta Prática:**  
+Dado um formulário de cadastro com validações complexas (CPF, email, data de nascimento, senha com requisitos, etc.):
 
-## PARTE 7: Mocks e Integrações Externas
-
-### Questão 7.1 – Marketplaces
-
-**Perguntas:**
-- Estratégia de testes sem impactar ambientes reais
-- Mock da API do Mercado Livre
-- Testes de erro
-- Validação de payloads
+- Implemente um teste de componente para a validação de CPF
+- Implemente um teste E2E para o fluxo completo de cadastro
+- Justifique por que você escolheu testar cada aspecto em cada nível
 
 ---
 
-### Questão 7.2 – Fluxo Completo de Pedido
+## PARTE 7: MOCKS E INTEGRAÇÕES EXTERNAS
+
+---
+
+### Questão 7.1
 
 **Cenário:**  
-E-commerce → Pagamento → WMS → Transportadora → Webhook → E-mail
+Seu sistema integra com marketplaces (Mercado Livre, Amazon, Shopee) via API para:
 
-**Perguntas:**
-- Arquitetura de testes
-- Mock de cada integração
-- Testes ponta a ponta isolados
-- Código de mock de webhook
-- Como evitar falhas silenciosas após mudanças de API
+- Publicar produtos
+- Atualizar preços
+- Processar pedidos
+- Atualizar estoque
+
+**Pergunta:**
+
+- Como você testaria essas integrações sem afetar os ambientes reais dos marketplaces?
+- Implemente uma estratégia de mock para simular respostas da API do Mercado Livre
+- Como você testaria cenários de erro (timeout, rate limiting, erro 500)?
+- Como você validaria que o payload enviado está correto sem fazer requisições reais?
 
 ---
 
-## Envio do Teste
+### Questão 7.2
 
-- Suba o repositório no seu GitHub
-- Envie o link diretamente ao recrutador
-- ❗ Não serão aceitas alterações após o envio
+**Cenário:**  
+Sistema que:
+
+- Recebe pedidos no e-commerce
+- Envia para gateway de pagamento (PagSeguro)
+- Após confirmação, envia para WMS via API
+- WMS confirma separação e envia para transportadora via EDI
+- Transportadora retorna código de rastreio via webhook
+- Sistema envia email ao cliente com rastreio
+
+**Pergunta:**
+
+- Desenhe uma arquitetura de testes que cubra todo este fluxo
+- Como você mockaria cada sistema externo?
+- Como você testaria o fluxo completo sem depender de sistemas externos?
+- Implemente código para mockar o webhook da transportadora
+- Como você garantiria que mudanças nas APIs externas não quebrem seus testes silenciosamente?
+- Como você testaria cenários de falha em cada etapa da cadeia?
+
+---
 
