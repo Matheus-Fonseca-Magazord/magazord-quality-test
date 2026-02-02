@@ -16,7 +16,7 @@ O teste é focado em **testes automatizados**, **arquitetura de testes**, **estr
 
 - Responda às questões de forma clara e objetiva  
 - Utilize exemplos práticos, pseudocódigo ou código real sempre que julgar necessário  
-- Não é obrigatório criar um projeto executável  
+- É obrigatório criar um projeto executável em cada cenário de teste prático
 - As respostas podem ser adicionadas neste próprio repositório  
 - Não serão aceitas alterações após o envio
 
@@ -48,28 +48,9 @@ Uma API retorna um token JWT que expira em 15 minutos. Seus testes demoram 45 mi
 **Pergunta:**
 
 - Descreva sua estratégia para gerenciar a autenticação durante toda a suite de testes
-- Implemente (em pseudocódigo ou código real) um mecanismo de refresh token automático
+- Como seria a implementação de um código real para validar um mecanismo de refresh token automático
 - Como você garantiria que testes executados em paralelo não conflitem no gerenciamento de tokens?
 
----
-
-### Questão 1.3
-
-**Cenário:**  
-Você está testando um endpoint de webhook que:
-
-- Recebe dados via POST
-- Processa assincronamente (pode levar de 5 a 300 segundos)
-- Envia callback para uma URL configurada quando o processamento termina
-- O callback contém um hash HMAC SHA-256 para validação de integridade
-
-**Pergunta:**
-
-- Desenhe a arquitetura completa da solução de testes automatizados
-- Implemente o código para validar o hash HMAC recebido
-- Como você lidaria com timeouts variáveis?
-- Como você isolaria os testes para executá-los em paralelo sem colisões?
-- Como você simularia falhas no callback (timeout, URL inválida, resposta 500)?
 
 ---
 
@@ -187,26 +168,6 @@ Sistema que importa arquivos CSV com 1000+ linhas e valida:
 
 ---
 
-### Questão 4.2
-
-**Cenário:**  
-Sistema que processa múltiplos tipos de arquivo (CSV, XLSX, XML, JSON) e:
-
-- Cada arquivo pode ter até 100.000 registros
-- Processamento é assíncrono com fila
-- Sistema gera relatório de erros
-- Alguns registros podem ser processados parcialmente
-- Sistema possui retry automático para falhas temporárias
-
-**Pergunta:**
-
-- Projete uma suite de testes automatizados completa para este cenário
-- Como você geraria arquivos de teste de diferentes tamanhos dinamicamente?
-- Implemente código para validar processamento parcial e retry
-- Como você testaria a performance da importação?
-- Como você validaria o relatório de erros sem processar 100.000 linhas em cada teste?
-
----
 
 ## PARTE 5: TESTES MOBILE
 
@@ -233,26 +194,6 @@ Aplicativo mobile (iOS e Android) que usa:
 
 ---
 
-### Questão 5.2
-
-**Cenário:**  
-App mobile com realidade aumentada (AR) que:
-
-- Usa a câmera para detectar objetos
-- Sobrepõe informações 3D
-- Requer calibração de sensores
-- Funciona offline com sync posterior
-- Tem gestos complexos (pinch, rotate, swipe multi-touch)
-
-**Pergunta:**
-
-- É viável automatizar testes para este cenário? Justifique.
-- Se sim, qual seria sua abordagem? Se não, quais alternativas você proporia?
-- Como você testaria gestos complexos?
-- Como você lidaria com a variabilidade de hardware (diferentes câmeras, sensores)?
-- Que tipo de testes você automatizaria vs. manteria manuais?
-
----
 
 ## PARTE 6: E2E vs TESTES DE COMPONENTES
 
@@ -268,12 +209,12 @@ Explique detalhadamente:
 - Vantagens e desvantagens de cada abordagem
 - Como você equilibraria a pirâmide de testes em um projeto real
 
-**Pergunta Prática:**  
+**Teste Prático:**  
 Dado um formulário de cadastro com validações complexas (CPF, email, data de nascimento, senha com requisitos, etc.):
 
 - Implemente um teste de componente para a validação de CPF
 - Implemente um teste E2E para o fluxo completo de cadastro
-- Justifique por que você escolheu testar cada aspecto em cada nível
+
 
 ---
 
@@ -291,7 +232,7 @@ Seu sistema integra com marketplaces (Mercado Livre, Amazon, Shopee) via API par
 - Processar pedidos
 - Atualizar estoque
 
-**Pergunta:**
+**Pergunta Teórica:**
 
 - Como você testaria essas integrações sem afetar os ambientes reais dos marketplaces?
 - Implemente uma estratégia de mock para simular respostas da API do Mercado Livre
@@ -300,26 +241,5 @@ Seu sistema integra com marketplaces (Mercado Livre, Amazon, Shopee) via API par
 
 ---
 
-### Questão 7.2
 
-**Cenário:**  
-Sistema que:
-
-- Recebe pedidos no e-commerce
-- Envia para gateway de pagamento (PagSeguro)
-- Após confirmação, envia para WMS via API
-- WMS confirma separação e envia para transportadora via EDI
-- Transportadora retorna código de rastreio via webhook
-- Sistema envia email ao cliente com rastreio
-
-**Pergunta:**
-
-- Desenhe uma arquitetura de testes que cubra todo este fluxo
-- Como você mockaria cada sistema externo?
-- Como você testaria o fluxo completo sem depender de sistemas externos?
-- Implemente código para mockar o webhook da transportadora
-- Como você garantiria que mudanças nas APIs externas não quebrem seus testes silenciosamente?
-- Como você testaria cenários de falha em cada etapa da cadeia?
-
----
 
