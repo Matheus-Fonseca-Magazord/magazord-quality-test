@@ -4,7 +4,7 @@
 
 ---
 
-# Teste para vaga de Analista de Qualidade Sênior – Magazord
+# Teste para vaga de Coordenador de Qualidade – Magazord
 
 Este repositório tem como objetivo avaliar candidatos à vaga de Analista de Qualidade Sênior na Magazord.
 
@@ -354,7 +354,7 @@ Maria Santos,maria@email.com,25,Rio de Janeiro
 
 ---
 
-# PARTE 5: TESTES MOBILE (OPCIONAL - BÔNUS)
+# PARTE 5: TESTES MOBILE
 
 ## Questão 5.1 - Automação Mobile
 
@@ -378,7 +378,7 @@ Aplicativo mobile (iOS e Android) que usa:
 
 **5.1.e)** Estratégia para executar mesmos testes em iOS e Android?
 
-### 🔨 Teste Prático (OPCIONAL)
+### 🔨 Teste Prático
 
 **Aplicativo:** Você pode usar qualquer ferramenta, apenas detalhe como foi feita a instalação e como devem ser executados os testes
 
@@ -477,15 +477,11 @@ Seu sistema integra com marketplaces (Mercado Livre, Amazon) via API para:
    - Rate limiting simulado
    - Validação de payload (schema validation)
 
-3. **Testes com API real** (para comparação):
-   - Mesmos cenários usando a API real
-
 **Entregáveis:**
 - `parte7-mocks/questao7.1/RESPOSTA_TEORICA.md`
 - `parte7-mocks/questao7.1/mocks/api-mock.js` - Mock server
 - `parte7-mocks/questao7.1/schemas/product-schema.json` - Schema de validação
 - `parte7-mocks/questao7.1/testes/with-mock.spec.js` - Testes com mock
-- `parte7-mocks/questao7.1/testes/with-real-api.spec.js` - Testes com API real
 
 
 **Exemplo de mock esperado:**
