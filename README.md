@@ -6,7 +6,7 @@
 
 # Teste para vaga de Coordenador de Qualidade – Magazord
 
-Este repositório tem como objetivo avaliar candidatos à vaga de Analista de Qualidade Sênior na Magazord.
+Este repositório tem como objetivo avaliar candidatos à vaga de Coordenador de Qualidade na Magazord.
 
 O teste é focado em testes automatizados, arquitetura de testes, estratégia de qualidade, integrações e boas práticas aplicadas a cenários reais.
 
