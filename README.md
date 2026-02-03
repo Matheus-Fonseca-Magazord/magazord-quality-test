@@ -17,6 +17,7 @@ O teste é focado em testes automatizados, arquitetura de testes, estratégia de
 - Utilize Cypress,Playwright, Robot ou o framework à sua escolha
 - Organize seu código de forma profissional (Page Objects, helpers, etc.)
 - Inclua README com instruções de execução de cada teste 
+- Crie os casos de teste para cada teste prático que será desenvolvido
 - **Prazo de entrega:** 2 dias corridos
 - Não serão aceitas alterações após o envio
 
@@ -39,6 +40,32 @@ seu-repositorio/
 ├── parte6-piramide/
 └── parte7-mocks/
 ```
+
+---
+ 
+## Casos de teste
+
+Para cada cenário de teste prático apresentado nas questões, você deve:
+Criar casos de teste automatizados que cubram adequadamente o cenário proposto.
+
+Você é responsável por:
+
+Definir quais casos de teste são necessários
+Determinar a quantidade de testes
+Escolher quais cenários cobrir (sucesso, erro, edge cases, etc)
+Estruturar a organização dos testes
+
+Não serão fornecidos detalhes de implementação ou lista de casos esperados.
+A avaliação considerará sua capacidade de:
+
+Identificar cenários relevantes
+Criar cobertura adequada
+Estruturar testes de forma profissional
+Demonstrar pensamento crítico sobre qualidade
+
+O arquivo com os casos de teste pode ser encaminhado no repositório em formato DOCX, PDF ou TXT.
+
+Em resumo: Leia o cenário, analise o que precisa ser testado e crie os testes que você julgar necessários.
 
 ---
 
