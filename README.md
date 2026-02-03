@@ -50,18 +50,18 @@ Criar casos de teste automatizados que cubram adequadamente o cenário proposto.
 
 Você é responsável por:
 
-Definir quais casos de teste são necessários
-Determinar a quantidade de testes
-Escolher quais cenários cobrir (sucesso, erro, edge cases, etc)
-Estruturar a organização dos testes
+- Definir quais casos de teste são necessários
+- Determinar a quantidade de testes
+- Escolher quais cenários cobrir (sucesso, erro, edge cases, etc)
+- Estruturar a organização dos testes
 
 Não serão fornecidos detalhes de implementação ou lista de casos esperados.
 A avaliação considerará sua capacidade de:
 
-Identificar cenários relevantes
-Criar cobertura adequada
-Estruturar testes de forma profissional
-Demonstrar pensamento crítico sobre qualidade
+- Identificar cenários relevantes
+- Criar cobertura adequada
+- Estruturar testes de forma profissional
+- Demonstrar pensamento crítico sobre qualidade
 
 O arquivo com os casos de teste pode ser encaminhado no repositório em formato DOCX, PDF ou TXT.
 
