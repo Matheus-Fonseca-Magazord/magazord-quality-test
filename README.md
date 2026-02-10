@@ -80,9 +80,7 @@ Você precisa testar uma API REST que possui rate limiting de 100 requisições 
 
 **1.1.a)** Como você estruturaria seus testes automatizados para validar que o rate limiting está funcionando corretamente?
 
-**1.1.b)** Como você garantiria que seus testes não sejam bloqueados pelo rate limiting durante a execução normal?
-
-**1.1.c)** Como você testaria o comportamento da API quando o limite é excedido?
+**1.1.b)** Como você testaria o comportamento da API quando o limite é excedido?
 
 ### 🔨 Teste Prático
 
@@ -118,11 +116,9 @@ Uma API retorna um token JWT que expira em 15 minutos. Seus testes demoram 45 mi
 
 ### 💭 Perguntas Teóricas
 
-**1.2.a)** Descreva sua estratégia para gerenciar a autenticação durante toda a suite de testes.
+**1.2.a)** Como você implementaria um mecanismo de refresh token automático?
 
-**1.2.b)** Como você implementaria um mecanismo de refresh token automático?
-
-**1.2.c)** Como você garantiria que testes executados em paralelo não conflitem no gerenciamento de tokens?
+**1.2.b)** Como você garantiria que testes executados em paralelo não conflitem no gerenciamento de tokens?
 
 ### 🔨 Teste Prático
 
@@ -174,10 +170,6 @@ Você precisa testar um fluxo de checkout que envolve:
 
 **2.1.b)** Como você validaria a confirmação do pedido sem depender de email real?
 
-**2.1.c)** Descreva sua estratégia de rollback/limpeza após cada teste.
-
-**2.1.d)** Como você lidaria com falhas intermitentes de processamento?
-
 ### 🔨 Teste Prático
 
 **Site a ser utilizado:** https://www.saucedemo.com
@@ -219,8 +211,6 @@ Sistema com múltiplas abas onde:
 
 **2.2.c)** Como você lidaria com popups/modais que abrem em novas janelas?
 
-**2.2.d)** Qual seria seu approach para debug quando o teste falha na "Aba 3"?
-
 ### 🔨 Teste Prático
 
 **Site a ser utilizado:** https://demoqa.com/browser-windows
@@ -255,11 +245,9 @@ Sistema ExtJS onde todos os IDs são gerados dinamicamente:
 
 **3.1.a)** Quais estratégias você utilizaria para localizar elementos de forma confiável?
 
-**3.1.b)** Implemente 3 diferentes seletores para um botão "Salvar" (pseudocódigo).
+**3.1.b)** Como você lidaria com componentes renderizados condicionalmente?
 
-**3.1.c)** Como você lidaria com componentes renderizados condicionalmente?
-
-**3.1.d)** Como identificar 1 botão específico entre 5 botões "Salvar" idênticos?
+**3.1.c)** Como identificar 1 botão específico entre 5 botões "Salvar" idênticos?
 
 ### 🔨 Teste Prático
 
@@ -285,46 +273,6 @@ Este site recarrega conteúdo dinamicamente a cada refresh.
 
 ---
 
-## Questão 3.2 - Componentes React Complexos
-
-### 📖 Contexto
-Aplicação React com:
-- Lazy loading
-- Redux
-- IDs aleatórios
-- Grids virtualizados (renderizam apenas linhas visíveis)
-
-### 💭 Perguntas Teóricas
-
-**3.2.a)** Como você testaria uma linha específica em um grid com 10.000 registros que usa virtualização?
-
-**3.2.b)** Como validar que uma ação no Redux Store refletiu na UI?
-
-**3.2.c)** Como esperar elementos carregados via lazy loading?
-
-**3.2.d)** Como testar componentes que aparecem apenas com permissões específicas?
-
-**3.2.e)** Como evitar race conditions em componentes assíncronos?
-
-### 🔨 Teste Prático
-
-**Site a ser utilizado:** https://demoqa.com/webtables
-
-**Implemente:**
-
-1. Buscar linha específica na tabela
-2. Adicionar novo registro
-3. Editar registro existente
-4. Deletar registro
-5. Validar paginação (se houver)
-6. Buscar elemento que aparece após ação assíncrona
-
-**Entregáveis:**
-- `parte3-frontend/questao3.2/RESPOSTA_TEORICA.md`
-- `parte3-frontend/questao3.2/testes/webtable.spec.js`
-- `parte3-frontend/questao3.2/testes/utils/table-helper.js` - Helper para manipulação de tabela
-
----
 
 # PARTE 4: TESTES COM ARQUIVOS
 
@@ -339,11 +287,9 @@ Sistema que importa arquivos CSV com 1000+ linhas e valida:
 
 ### 💭 Perguntas Teóricas
 
-**4.1.a)** Como você estruturaria os dados de teste (arquivos CSV)?
+**4.1.a)** Como validaria que todas as 1000 linhas foram processadas corretamente?
 
-**4.1.b)** Como validaria que todas as 1000 linhas foram processadas corretamente?
-
-**4.1.c)** Como testaria cenários de erro (arquivo corrompido, dados inválidos)?
+**4.1.b)** Como testaria cenários de erro (arquivo corrompido, dados inválidos)?
 
 ### 🔨 Teste Prático
 
@@ -399,11 +345,7 @@ Aplicativo mobile (iOS e Android) que usa:
 
 **5.1.b)** Como você mockaria geolocalização em testes automatizados?
 
-**5.1.c)** Como testaria comportamento offline/online?
-
-**5.1.d)** Como validaria notificações push?
-
-**5.1.e)** Estratégia para executar mesmos testes em iOS e Android?
+**5.1.c)** Estratégia para executar mesmos testes em iOS e Android?
 
 ### 🔨 Teste Prático
 
@@ -430,13 +372,9 @@ Aplicativo mobile (iOS e Android) que usa:
 
 ### 💭 Perguntas Teóricas
 
-**6.1.a)** Explique detalhadamente a diferença entre testes E2E e testes de componentes.
+**6.1.a)** Explique a diferença entre testes E2E e testes de componentes.
 
 **6.1.b)** Quando usar cada tipo?
-
-**6.1.c)** Vantagens e desvantagens de cada abordagem.
-
-**6.1.d)** Como você equilibraria a pirâmide de testes em um projeto real?
 
 ### 🔨 Teste Prático
 
@@ -478,10 +416,6 @@ Seu sistema integra com marketplaces (Mercado Livre, Amazon) via API para:
 **7.1.a)** Como você testaria essas integrações sem afetar os ambientes reais?
 
 **7.1.b)** Como implementaria uma estratégia de mock para simular respostas?
-
-**7.1.c)** Como testaria cenários de erro (timeout, rate limiting, erro 500)?
-
-**7.1.d)** Como validaria que o payload enviado está correto sem requisições reais?
 
 ### 🔨 Teste Prático
 
