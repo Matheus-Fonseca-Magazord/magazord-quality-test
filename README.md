@@ -213,7 +213,7 @@ Sistema com múltiplas abas onde:
 
 ### 🔨 Teste Prático
 
-**Site a ser utilizado:** https://demoqa.com/browser-windows
+**Site a ser utilizado:** https://demoqa.com    ->   browser-windows
 
 **Implemente:**
 
@@ -378,7 +378,7 @@ Aplicativo mobile (iOS e Android) que usa:
 
 ### 🔨 Teste Prático
 
-**Site a ser utilizado:** https://demoqa.com/automation-practice-form
+**Site a ser utilizado:** https://demoqa.com      ->   automation-practice-form
 
 **Implemente:**
 
@@ -461,6 +461,8 @@ GET /products (após 10 requisições) → 429 { error: "Rate limit exceeded" }
 ```
 
 ---
+
+OBS: Os links disponibilizados para os testes são apenas como referência e exemplo. Caso não consiga acessar algum deles ou queira utilizar outro, fique à vontade, desde que sejam públicos e estejam acessíveis no momento da execução do teste.
 
 
 ## O que será avaliado em cada teste
