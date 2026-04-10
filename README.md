@@ -366,7 +366,7 @@ Aplicativo mobile (iOS e Android) que usa:
 
 ---
 
-# PARTE 6: E2E vs TESTES DE COMPONENTES
+# PARTE 6: TESTE DE COMPONENTES
 
 ## Questão 6.1 - Pirâmide de Testes
 
@@ -387,15 +387,10 @@ Aplicativo mobile (iOS e Android) que usa:
    - Validação de campo de telefone
    - Validação de seleção de data
    
-2. **Teste E2E (fluxo completo):**
-   - Preencher formulário completo
-   - Submeter
-   - Validar modal de confirmação
 
 **Entregáveis:**
 - `parte6-piramide/questao6.1/RESPOSTA_TEORICA.md`
-- `parte6-piramide/questao6.1/testes/component.spec.js` - Testes de componente
-- `parte6-piramide/questao6.1/testes/e2e.spec.js` - Teste E2E
+- `parte6-piramide/questao6.1/testes/component.spec.js` - Testes de componentes
 - `parte6-piramide/questao6.1/JUSTIFICATIVA.md` - Por que cada abordagem foi escolhida
 
 ---
@@ -566,6 +561,9 @@ npm run test:parte2
 - Cypress Best Practices: https://docs.cypress.io/guides/references/best-practices
 - Playwright Best Practices: https://playwright.dev/docs/best-practices
 - https://docs.robotframework.org/docs
+
+
+<span style="color: red;"><strong>Observação: caso você avance para a próxima etapa da entrevista técnica, será importante estar preparado para executar os testes em seu próprio ambiente durante a avaliação. Dessa forma, poderemos acompanhar sua abordagem, entendimento do fluxo e capacidade de resolução em tempo real.</strong></span>
 
 
 **Boa sorte! 🚀**
