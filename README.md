@@ -29,17 +29,20 @@ seu-repositorio/
 ├── package.json
 ├── cypress.config.js (ou playwright.config.js)
 ├── parte1-api/
-│   ├── questao1.1/
-│   │   ├── RESPOSTA_TEORICA.md
-│   │   └── testes/
-│   └── questao1.2/
+│   └── questao1.1/
 ├── parte2-e2e/
-├── parte3-frontend/
-├── parte4-arquivos/
-├── parte5-mobile/
-├── parte6-piramide/
-└── parte7-mocks/
+│   └── questao2.1/
+├── parte3-arquivos/
+│   └── questao3.1/
+├── parte4-mobile/
+│   └── questao4.1/
+│       └── RESPOSTA_TEORICA.md
+└── parte5-mocks/
+    └── questao5.1/
+        └── RESPOSTA_TEORICA.md
 ```
+
+> ⚠️ As Partes 4 e 5 são **somente teóricas** — não é necessário implementar código ou configurar ambiente para elas. O foco é avaliar raciocínio, conhecimento de ferramentas e capacidade de arquitetar uma solução.
 
 ---
  
@@ -71,67 +74,34 @@ Em resumo: Leia o cenário, analise o que precisa ser testado e crie os testes q
 
 # PARTE 1: TESTES API
 
-## Questão 1.1 - Rate Limiting
+## Questão 1.1 - Rate Limiting e Autenticação com Token
 
 ### 📖 Contexto
-Você precisa testar uma API REST que possui rate limiting de 100 requisições por minuto.
+Você precisa testar uma API REST que possui rate limiting de requisições, e também uma API que retorna um token de autenticação com tempo de expiração curto, usado em chamadas subsequentes.
 
 ### 💭 Perguntas Teóricas
 
-**1.1.a)** Como você estruturaria seus testes automatizados para validar que o rate limiting está funcionando corretamente?
+**1.1.a)** Como você estruturaria seus testes automatizados para validar que o rate limiting está funcionando corretamente, e como testaria o comportamento quando o limite é excedido?
 
-**1.1.b)** Como você testaria o comportamento da API quando o limite é excedido?
+**1.1.b)** Como você implementaria um mecanismo simples para obter e reutilizar um token de autenticação entre os testes, evitando fazer login a cada teste?
+
+**1.1.c)** Como você detectaria que um token expirou e trataria esse cenário no seu teste?
 
 ### 🔨 Teste Prático
 
-**API a ser utilizada:** GitHub API - https://api.github.com
+**API 1 (Rate Limiting):** GitHub API - https://api.github.com
 
 A GitHub API tem rate limiting de:
 - 60 requisições/hora (sem autenticação)
 - 5000 requisições/hora (com autenticação)
-
-**Implemente:**
-
-1. Um teste que valida os headers de rate limiting (`X-RateLimit-Limit`, `X-RateLimit-Remaining`, `X-RateLimit-Reset`)
-2. Um mecanismo que previne seus testes de serem bloqueados
-3. Um teste que detecta quando o rate limit foi atingido (status 403)
 
 **Endpoint para testar:**
 ```
 GET https://api.github.com/users/github
 ```
 
-**Entregáveis:**
-- `parte1-api/questao1.1/RESPOSTA_TEORICA.md` - Suas respostas teóricas
-- `parte1-api/questao1.1/testes/rate-limiting.spec.js` - Testes implementados
-- `parte1-api/questao1.1/testes/utils/rate-limit-helper.js` - Helper de gerenciamento
+**API 2 (Token):** ReqRes API - https://reqres.in
 
-
----
-
-## Questão 1.2 - Gerenciamento de Tokens
-
-### 📖 Contexto
-Uma API retorna um token JWT que expira em 15 minutos. Seus testes demoram 45 minutos para executar e fazem múltiplas chamadas autenticadas.
-
-### 💭 Perguntas Teóricas
-
-**1.2.a)** Como você implementaria um mecanismo de refresh token automático?
-
-**1.2.b)** Como você garantiria que testes executados em paralelo não conflitem no gerenciamento de tokens?
-
-### 🔨 Teste Prático
-
-**API a ser utilizada:** ReqRes API - https://reqres.in
-
-**Implemente:**
-
-1. Um sistema de autenticação que obtém token via POST /api/login
-2. Um mecanismo que detecta quando o token está prestes a expirar (simule expiração de 2 minutos)
-3. Refresh automático do token
-4. Testes que executam em paralelo sem conflito de tokens
-
-**Endpoints:**
 ```javascript
 // Login
 POST https://reqres.in/api/login
@@ -143,13 +113,17 @@ GET https://reqres.in/api/users/2
 Headers: { "Authorization": "Bearer {token}" }
 ```
 
+**Implemente:**
+
+1. Um teste que valida os headers de rate limiting (`X-RateLimit-Limit`, `X-RateLimit-Remaining`, `X-RateLimit-Reset`) na API do GitHub
+2. Um teste que detecta quando o rate limit foi atingido (status 403)
+3. Um fluxo simples de login via ReqRes que obtém o token e o reutiliza em uma requisição autenticada
+4. Um teste que simule a expiração do token (pode ser um valor fixo curto, ex: 2 minutos) e valide o tratamento do erro
+
 **Entregáveis:**
-- `parte1-api/questao1.2/RESPOSTA_TEORICA.md`
-- `parte1-api/questao1.2/testes/auth-manager.js` - Classe de gerenciamento de token
-- `parte1-api/questao1.2/testes/token-refresh.spec.js` - Testes implementados
-
-
-**Dica:** Simule a expiração alterando o tempo de vida do token para 2 minutos no seu código.
+- `parte1-api/questao1.1/RESPOSTA_TEORICA.md` - Suas respostas teóricas
+- `parte1-api/questao1.1/testes/api.spec.js` - Testes implementados
+- `parte1-api/questao1.1/testes/utils/api-helper.js` - Helper de rate limit e token
 
 ---
 
@@ -193,90 +167,9 @@ Você precisa testar um fluxo de checkout que envolve:
 
 ---
 
-## Questão 2.2 - Navegação Multi-Abas
+# PARTE 3: TESTES COM ARQUIVOS
 
-### 📖 Contexto
-Sistema com múltiplas abas onde:
-- Aba 1: Formulário extenso
-- Aba 2: Dados calculados (abre ao clicar "Próximo")
-- Aba 3: Modal de upload (abre dentro da Aba 2)
-
-**Problema:** Se houver refresh, os dados da Aba 1 são perdidos.
-
-### 💭 Perguntas Teóricas
-
-**2.2.a)** Qual estratégia você usaria para manter referência entre as abas?
-
-**2.2.b)** Como você garantiria que os dados não se percam durante a execução?
-
-**2.2.c)** Como você lidaria com popups/modais que abrem em novas janelas?
-
-### 🔨 Teste Prático
-
-**Site a ser utilizado:** https://demoqa.com    ->   browser-windows
-
-**Implemente:**
-
-1. Teste que abre nova aba via "New Tab"
-2. Navega para a nova aba
-3. Valida conteúdo da nova aba
-4. Retorna para aba original
-5. Abre nova janela via "New Window"
-6. Gerencia múltiplas janelas simultaneamente
-
-**Entregáveis:**
-- `parte2-e2e/questao2.2/RESPOSTA_TEORICA.md`
-- `parte2-e2e/questao2.2/testes/multi-tab.spec.js`
-- `parte2-e2e/questao2.2/testes/utils/window-manager.js` - Helper de janelas
-
----
-
-# PARTE 3: TESTES FRONT-END
-
-## Questão 3.1 - Seletores Dinâmicos
-
-### 📖 Contexto
-Sistema ExtJS onde todos os IDs são gerados dinamicamente:
-- `textfield-1234-inputEl`
-- `button-5678-btnEl`
-- Os números mudam a cada renderização
-
-### 💭 Perguntas Teóricas
-
-**3.1.a)** Quais estratégias você utilizaria para localizar elementos de forma confiável?
-
-**3.1.b)** Como você lidaria com componentes renderizados condicionalmente?
-
-**3.1.c)** Como identificar 1 botão específico entre 5 botões "Salvar" idênticos?
-
-### 🔨 Teste Prático
-
-**Site a ser utilizado:** https://the-internet.herokuapp.com/dynamic_content
-
-Este site recarrega conteúdo dinamicamente a cada refresh.
-
-**Implemente:**
-
-1. **5 estratégias diferentes** de seleção de elementos:
-   - Por texto visível
-   - Por estrutura DOM (nth-child)
-   - Por atributo parcial
-   - Por hierarquia (parent > child)
-   - Por XPath
-
-2. Testes que funcionem mesmo após múltiplos refreshes
-
-**Entregáveis:**
-- `parte3-frontend/questao3.1/RESPOSTA_TEORICA.md`
-- `parte3-frontend/questao3.1/testes/dynamic-selectors.spec.js`
-- `parte3-frontend/questao3.1/testes/pages/dynamic-page.js` - Page Object com diferentes estratégias
-
----
-
-
-# PARTE 4: TESTES COM ARQUIVOS
-
-## Questão 4.1 - Importação de CSV
+## Questão 3.1 - Importação de CSV
 
 ### 📖 Contexto
 Sistema que importa arquivos CSV com 1000+ linhas e valida:
@@ -287,9 +180,9 @@ Sistema que importa arquivos CSV com 1000+ linhas e valida:
 
 ### 💭 Perguntas Teóricas
 
-**4.1.a)** Como validaria que todas as 1000 linhas foram processadas corretamente?
+**3.1.a)** Como validaria que todas as 1000 linhas foram processadas corretamente?
 
-**4.1.b)** Como testaria cenários de erro (arquivo corrompido, dados inválidos)?
+**3.1.b)** Como testaria cenários de erro (arquivo corrompido, dados inválidos)?
 
 ### 🔨 Teste Prático
 
@@ -312,10 +205,10 @@ Sistema que importa arquivos CSV com 1000+ linhas e valida:
 4. Validação de upload bem-sucedido
 
 **Entregáveis:**
-- `parte4-arquivos/questao4.1/RESPOSTA_TEORICA.md`
-- `parte4-arquivos/questao4.1/testes/csv-upload.spec.js`
-- `parte4-arquivos/questao4.1/testes/utils/csv-generator.js` - Gerador de CSV
-- `parte4-arquivos/questao4.1/testes/fixtures/` - Exemplos de CSV (válido, inválido, corrompido)
+- `parte3-arquivos/questao3.1/RESPOSTA_TEORICA.md`
+- `parte3-arquivos/questao3.1/testes/csv-upload.spec.js`
+- `parte3-arquivos/questao3.1/testes/utils/csv-generator.js` - Gerador de CSV
+- `parte3-arquivos/questao3.1/testes/fixtures/` - Exemplos de CSV (válido, inválido, corrompido)
 
 
 **Exemplo de CSV a ser gerado:**
@@ -327,9 +220,9 @@ Maria Santos,maria@email.com,25,Rio de Janeiro
 
 ---
 
-# PARTE 5: TESTES MOBILE
+# PARTE 4: TESTES MOBILE (TEÓRICA)
 
-## Questão 5.1 - Automação Mobile
+## Questão 4.1 - Automação Mobile
 
 ### 📖 Contexto
 Aplicativo mobile (iOS e Android) que usa:
@@ -341,63 +234,26 @@ Aplicativo mobile (iOS e Android) que usa:
 
 ### 💭 Perguntas Teóricas
 
-**5.1.a)** Qual ferramenta você escolheria e por quê? (Appium, Detox, Maestro, etc.)
+Esta questão é **somente teórica** — não é necessário implementar nenhum código ou configurar ambiente. Responda com profundidade técnica e justifique suas escolhas.
 
-**5.1.b)** Como você mockaria geolocalização em testes automatizados?
+**4.1.a)** Qual ferramenta você escolheria para automação mobile (Appium, Detox, Maestro, etc.) e por quê? Compare pelo menos 2 opções considerando o contexto descrito.
 
-**5.1.c)** Estratégia para executar mesmos testes em iOS e Android?
+**4.1.b)** Como você mockaria geolocalização, câmera e notificações push em testes automatizados? Descreva a abordagem para cada um.
 
-### 🔨 Teste Prático
+**4.1.c)** Qual estratégia você usaria para executar os mesmos testes em iOS e Android, minimizando duplicação de código?
 
-**Aplicativo:** Você pode usar qualquer ferramenta, apenas detalhe como foi feita a instalação e como devem ser executados os testes
+**4.1.d)** Descreva, em alto nível, como seria o setup de ambiente para rodar esses testes localmente e em CI/CD (passos principais, sem precisar executar).
 
-
-**Implemente:**
-
-1. Configuração de ambiente mobile (Appium, Detox e etc )
-2. Teste básico de navegação
-3. Mock de geolocalização (se possível)
-4. Documentação de setup
+**4.1.e)** Como você validaria sincronização de dados e comportamento offline sem depender de um backend real?
 
 **Entregáveis:**
-- `parte5-mobile/questao5.1/RESPOSTA_TEORICA.md`
-- `parte5-mobile/questao5.1/SETUP.md` - Instruções de configuração
-- `parte5-mobile/questao5.1/testes/mobile-basic.spec.js` 
+- `parte4-mobile/questao4.1/RESPOSTA_TEORICA.md`
 
 ---
 
-# PARTE 6: TESTE DE COMPONENTES
+# PARTE 5: MOCKS E INTEGRAÇÕES (TEÓRICA)
 
-## Questão 6.1 - Pirâmide de Testes
-
-### 💭 Perguntas Teóricas
-
-**6.1.a)** Explique a diferença entre testes E2E e testes de componentes.
-
-**6.1.b)** Quando usar cada tipo?
-
-### 🔨 Teste Prático
-
-**Site a ser utilizado:** https://demoqa.com      ->   automation-practice-form
-
-**Implemente:**
-
-1. **Teste de Componente (isolado):**
-   - Validação de campo de email
-   - Validação de campo de telefone
-   - Validação de seleção de data
-   
-
-**Entregáveis:**
-- `parte6-piramide/questao6.1/RESPOSTA_TEORICA.md`
-- `parte6-piramide/questao6.1/testes/component.spec.js` - Testes de componentes
-- `parte6-piramide/questao6.1/JUSTIFICATIVA.md` - Por que cada abordagem foi escolhida
-
----
-
-# PARTE 7: MOCKS E INTEGRAÇÕES
-
-## Questão 7.1 - Mocks de APIs Externas
+## Questão 5.1 - Mocks de APIs Externas
 
 ### 📖 Contexto
 Seu sistema integra com marketplaces (Mercado Livre, Amazon) via API para:
@@ -408,52 +264,20 @@ Seu sistema integra com marketplaces (Mercado Livre, Amazon) via API para:
 
 ### 💭 Perguntas Teóricas
 
-**7.1.a)** Como você testaria essas integrações sem afetar os ambientes reais?
+Esta questão é **somente teórica** — não é necessário implementar mock server, código ou schemas. Responda com profundidade técnica e justifique suas escolhas.
 
-**7.1.b)** Como implementaria uma estratégia de mock para simular respostas?
+**5.1.a)** Como você testaria essas integrações sem afetar os ambientes reais dos marketplaces?
 
-### 🔨 Teste Prático
+**5.1.b)** Como implementaria uma estratégia de mock para simular respostas? Qual(is) ferramenta(s) você usaria (MSW, JSON Server, WireMock, etc.) e por quê?
 
-**API a ser utilizada:** https://fakestoreapi.com (API pública para simular e-commerce)
+**5.1.c)** Descreva como você simularia, em nível de mock, os seguintes cenários: erro 500, timeout e rate limiting (429). O que cada um desses testes deve validar no seu sistema?
 
-**Implemente:**
+**5.1.d)** Como você validaria que o payload enviado/recebido está no formato esperado (schema validation)? Onde essa validação entraria no seu pipeline de testes?
 
-1. **Mock Server** usando MSW, JSON Server ou similar:
-   ```javascript
-   GET  /products       // Listar produtos
-   POST /products       // Criar produto
-   PUT  /products/:id   // Atualizar produto
-   DELETE /products/:id // Deletar produto
-   ```
-
-2. **Testes com mock:**
-   - Requisição bem-sucedida
-   - Timeout simulado
-   - Erro 500 simulado
-   - Rate limiting simulado
-   - Validação de payload (schema validation)
+**5.1.e)** Qual sua visão sobre a diferença entre testes com mock e testes de contrato (contract testing) nesse cenário de integração com marketplaces? Quando usar cada um?
 
 **Entregáveis:**
-- `parte7-mocks/questao7.1/RESPOSTA_TEORICA.md`
-- `parte7-mocks/questao7.1/mocks/api-mock.js` - Mock server
-- `parte7-mocks/questao7.1/schemas/product-schema.json` - Schema de validação
-- `parte7-mocks/questao7.1/testes/with-mock.spec.js` - Testes com mock
-
-
-**Exemplo de mock esperado:**
-```javascript
-// Sucesso
-GET /products/1 → 200 { id: 1, title: "Product", price: 100 }
-
-// Erro
-GET /products/999 → 404 { error: "Product not found" }
-
-// Timeout
-GET /products?slow=true → timeout após 5s
-
-// Rate limit
-GET /products (após 10 requisições) → 429 { error: "Rate limit exceeded" }
-```
+- `parte5-mocks/questao5.1/RESPOSTA_TEORICA.md`
 
 ---
 
@@ -468,7 +292,7 @@ OBS: Os links disponibilizados para os testes são apenas como referência e exe
 - Exemplos práticos
 - Conhecimento de boas práticas
 
-### Código
+### Código (Partes 1, 2 e 3)
 - ✅ Testes executam sem erro
 - ✅ Código limpo e organizado
 - ✅ Uso de Page Objects / Helpers
@@ -476,6 +300,12 @@ OBS: Os links disponibilizados para os testes são apenas como referência e exe
 - ✅ Comentários em código complexo
 - ✅ README com instruções claras
 - ✅ Boas práticas de automação
+
+### Partes 4 e 5 (Teóricas)
+- ✅ Profundidade técnica e domínio de ferramentas/conceitos
+- ✅ Comparação de abordagens com justificativa (não só descrever, mas argumentar)
+- ✅ Capacidade de pensar em arquitetura de solução sem precisar codar
+- ✅ Clareza de escrita
 ---
 
 # 📝 README.md Obrigatório
@@ -507,7 +337,8 @@ npm test
 \`\`\`bash
 npm run test:parte1
 npm run test:parte2
-# etc...
+npm run test:parte3
+# Partes 4 e 5 são teóricas, sem script de execução
 \`\`\`
 
 ## Estrutura do Projeto
@@ -547,7 +378,6 @@ npm run test:parte2
 
 ## Sites para Testes
 - Sauce Demo: https://www.saucedemo.com/
-- DemoQA: https://demoqa.com/
 - The Internet: https://the-internet.herokuapp.com/
 
 ## Ferramentas Sugeridas
